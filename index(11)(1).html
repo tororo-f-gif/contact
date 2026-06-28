@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>神宮寺匁トロロ ご連絡BOX</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      color: #111827;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 560px;
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 24px;
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.22);
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      font-size: 28px;
+      line-height: 1.4;
+    }
+
+    .description {
+      margin: 12px 0 22px;
+      text-align: center;
+      color: #6b7280;
+      line-height: 1.8;
+    }
+
+    .profile {
+      margin-bottom: 20px;
+      padding: 14px 16px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .profile strong {
+      display: inline-block;
+      width: 76px;
+      color: #6b7280;
+    }
+
+    .profile a {
+      color: #7c3aed;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 220px;
+      padding: 15px;
+      border: 2px solid #e5e7eb;
+      border-radius: 14px;
+      outline: none;
+      resize: vertical;
+      background: #fff;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    textarea:focus {
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+    }
+
+    .counter {
+      margin-top: 7px;
+      text-align: right;
+      color: #777;
+      font-size: 12px;
+    }
+
+    .rule {
+      margin-top: 15px;
+      padding: 12px;
+      background: #fff7ed;
+      border-radius: 12px;
+      color: #9a3412;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .agree {
+      margin-top: 14px;
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      color: #374151;
+      font-size: 13px;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    .agree input {
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+      accent-color: #7c3aed;
+    }
+
+    .buttons {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .app-button {
+      min-height: 54px;
+      padding: 13px 12px;
+      border: 0;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .gmail { background: linear-gradient(90deg, #dc2626, #ef4444); }
+    .x { background: #111827; }
+
+    .fallback-title {
+      margin: 18px 0 8px;
+      text-align: center;
+      color: #6b7280;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .fallbacks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .fallbacks a {
+      padding: 11px 9px;
+      border: 1px solid #d1d5db;
+      border-radius: 11px;
+      color: #374151;
+      background: #fff;
+      text-align: center;
+      font-size: 12px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .status {
+      display: none;
+      margin-top: 14px;
+      padding: 12px;
+      border-radius: 12px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: bold;
+      line-height: 1.6;
+    }
+
+    .status.success {
+      display: block;
+      color: #166534;
+      background: #dcfce7;
+    }
+
+    .status.error {
+      display: block;
+      color: #991b1b;
+      background: #fee2e2;
+    }
+
+    .manual-copy {
+      display: none;
+      margin-top: 14px;
+      padding: 12px;
+      background: #f3f4f6;
+      border-radius: 12px;
+    }
+
+    .manual-copy.show { display: block; }
+
+    .manual-copy textarea {
+      min-height: 140px;
+      font-size: 14px;
+    }
+
+    .manual-copy button {
+      width: 100%;
+      min-height: 46px;
+      margin-top: 9px;
+      border: 0;
+      border-radius: 12px;
+      background: #7c3aed;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .note {
+      margin: 14px 0 0;
+      text-align: center;
+      color: #6b7280;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 560px) {
+      .box {
+        padding: 23px 17px;
+        border-radius: 18px;
+      }
+
+      h1 { font-size: 25px; }
+
+      .buttons,
+      .fallbacks {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="box">
+    <h1>神宮寺匁トロロ<br>ご連絡BOX</h1>
+
+    <p class="description">
+      お仕事のご依頼やご相談、アドバイス、やってほしいこと、質問など、<br>
+      どんな内容でもお気軽にお送りください。皆さまからのご連絡をお待ちしています。
+    </p>
+
+    <div class="profile">
+      <div><strong>名前</strong>神宮寺匁トロロ</div>
+      <div>
+        <strong>XへDM</strong>
+        <a href="https://x.com/Tororo_JINGUJI">
+          @Tororo_JINGUJI
+        </a>
+      </div>
+    </div>
+
+    <label for="message">内容</label>
+
+    <textarea
+      id="message"
+      maxlength="2000"
+      minlength="5"
+      placeholder="ここに内容を入力してください"
+    ></textarea>
+
+    <div class="counter">
+      <span id="count">0</span> / 2000文字
+    </div>
+
+    <div class="rule">
+      いたずら、連続送信、誹謗中傷、脅迫、個人情報の不正掲載及び同じ文字の大量入力は禁止です。
+    </div>
+
+    <label class="agree">
+      <input type="checkbox" id="agree">
+      <span>ルールを確認し、入力内容に間違いがないことを確認しました。</span>
+    </label>
+
+    <div class="buttons">
+      <a id="gmailAppButton" class="app-button gmail" href="#">
+        Gmailアプリで送る
+      </a>
+
+      <a id="xAppButton" class="app-button x" href="#">
+        コピーしてXアプリを開く
+      </a>
+    </div>
+
+    <div id="status" class="status" aria-live="polite"></div>
+
+    <section id="manualCopyBox" class="manual-copy">
+      <textarea id="manualCopyText" readonly></textarea>
+      <button type="button" id="retryCopyButton">
+        もう一度コピーする
+      </button>
+    </section>
+
+    <p class="fallback-title">
+      アプリが開かない場合
+    </p>
+
+    <div class="fallbacks">
+      <a id="gmailWebButton" href="#">
+        Web版Gmailを開く
+      </a>
+
+      <a href="https://x.com/Tororo_JINGUJI">
+        Web版Xを開く
+      </a>
+    </div>
+
+    <p class="note">
+      AndroidではGmail・Xアプリを優先して起動します。<br>
+      アプリがない場合はWeb版へ移動します。
+    </p>
+  </main>
+
+  <script>
+    const EMAIL = "tororo.gif.gck@gmail.com";
+    const X_NAME = "Tororo_JINGUJI";
+    const X_WEB_URL = "https://x.com/" + X_NAME;
+    const WAIT_SECONDS = 60;
+
+    const userAgent = navigator.userAgent || "";
+    const isAndroid = /Android/i.test(userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+
+    const messageInput = document.getElementById("message");
+    const count = document.getElementById("count");
+    const agree = document.getElementById("agree");
+    const gmailAppButton = document.getElementById("gmailAppButton");
+    const xAppButton = document.getElementById("xAppButton");
+    const gmailWebButton = document.getElementById("gmailWebButton");
+    const statusBox = document.getElementById("status");
+    const manualCopyBox = document.getElementById("manualCopyBox");
+    const manualCopyText = document.getElementById("manualCopyText");
+
+    messageInput.addEventListener("input", () => {
+      count.textContent = messageInput.value.length;
+      clearStatus();
+      manualCopyBox.classList.remove("show");
+      updateLinks();
+    });
+
+    agree.addEventListener("change", clearStatus);
+
+    gmailAppButton.addEventListener("click", (event) => {
+      const text = validateMessage();
+
+      if (!text) {
+        event.preventDefault();
+        return;
+      }
+
+      saveSendTime();
+
+      if (isIOS) {
+        event.preventDefault();
+        openIOSAppWithFallback(
+          createIOSGmailUrl(text),
+          createGmailWebUrl(text)
+        );
+      }
+    });
+
+    xAppButton.addEventListener("click", (event) => {
+      const text = validateMessage();
+
+      if (!text) {
+        event.preventDefault();
+        return;
+      }
+
+      const fullText =
+        "神宮寺匁トロロ様\n\n" +
+        text;
+
+      /*
+        アプリ起動をブラウザに止められにくくするため、
+        クリック中にコピー処理と画面移動を行います。
+      */
+      copyImmediately(fullText);
+      saveSendTime();
+
+      if (isIOS) {
+        event.preventDefault();
+        openIOSAppWithFallback(
+          "twitter://user?screen_name=" + encodeURIComponent(X_NAME),
+          X_WEB_URL
+        );
+      }
+    });
+
+    gmailWebButton.addEventListener("click", (event) => {
+      const text = validateMessage();
+
+      if (!text) {
+        event.preventDefault();
+        return;
+      }
+
+      gmailWebButton.href = createGmailWebUrl(text);
+      saveSendTime();
+    });
+
+    document.getElementById("retryCopyButton").addEventListener("click", async () => {
+      const copied = await copyToClipboard(manualCopyText.value);
+
+      if (copied) {
+        showStatus(
+          "クリップボードにコピーしました。",
+          "success"
+        );
+        manualCopyBox.classList.remove("show");
+      } else {
+        manualCopyText.focus();
+        manualCopyText.select();
+        manualCopyText.setSelectionRange(
+          0,
+          manualCopyText.value.length
+        );
+
+        showStatus(
+          "文章を選択しました。長押しメニューからコピーしてください。",
+          "error"
+        );
+      }
+    });
+
+    function createMessageBody(text) {
+      return (
+        "神宮寺匁トロロ様\n\n" +
+        text +
+        "\n\n--------------------\n" +
+        "ご連絡BOXから作成"
+      );
+    }
+
+    function createGmailWebUrl(text) {
+      const subject = "神宮寺匁トロロへのご連絡";
+      const body = createMessageBody(text);
+
+      return (
+        "https://mail.google.com/mail/?view=cm&fs=1" +
+        "&to=" + encodeURIComponent(EMAIL) +
+        "&su=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body)
+      );
+    }
+
+    function createAndroidGmailIntent(text) {
+      const subject = "神宮寺匁トロロへのご連絡";
+      const body = createMessageBody(text);
+      const webFallback = createGmailWebUrl(text);
+
+      /*
+        Gmail Androidアプリをパッケージ名で指定します。
+        アプリを開けない場合はbrowser_fallback_urlでWeb版Gmailへ移動します。
+      */
+      return (
+        "intent://" +
+        encodeURIComponent(EMAIL) +
+        "?subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body) +
+        "#Intent;" +
+        "scheme=mailto;" +
+        "action=android.intent.action.SENDTO;" +
+        "package=com.google.android.gm;" +
+        "S.browser_fallback_url=" + encodeURIComponent(webFallback) + ";" +
+        "end"
+      );
+    }
+
+    function createAndroidXIntent() {
+      /*
+        X Androidアプリのパッケージはcom.twitter.androidです。
+        アプリを開けない場合はXのWebプロフィールへ移動します。
+      */
+      return (
+        "intent://user" +
+        "?screen_name=" + encodeURIComponent(X_NAME) +
+        "#Intent;" +
+        "scheme=twitter;" +
+        "package=com.twitter.android;" +
+        "S.browser_fallback_url=" + encodeURIComponent(X_WEB_URL) + ";" +
+        "end"
+      );
+    }
+
+    function createIOSGmailUrl(text) {
+      const subject = "神宮寺匁トロロへのご連絡";
+      const body = createMessageBody(text);
+
+      return (
+        "googlegmail:///co" +
+        "?to=" + encodeURIComponent(EMAIL) +
+        "&subject=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(body)
+      );
+    }
+
+    function updateLinks() {
+      const text = messageInput.value.trim();
+      const gmailWeb = createGmailWebUrl(text);
+
+      gmailWebButton.href = gmailWeb;
+
+      if (isAndroid) {
+        gmailAppButton.href = createAndroidGmailIntent(text);
+        xAppButton.href = createAndroidXIntent();
+      } else if (isIOS) {
+        gmailAppButton.href = createIOSGmailUrl(text);
+        xAppButton.href =
+          "twitter://user?screen_name=" +
+          encodeURIComponent(X_NAME);
+      } else {
+        gmailAppButton.href = gmailWeb;
+        xAppButton.href = X_WEB_URL;
+      }
+    }
+
+    function openIOSAppWithFallback(appUrl, webUrl) {
+      const startTime = Date.now();
+
+      window.location.href = appUrl;
+
+      setTimeout(() => {
+        /*
+          アプリが開かず、ページが表示されたままならWeb版へ移動します。
+        */
+        if (
+          document.visibilityState === "visible" &&
+          Date.now() - startTime < 2500
+        ) {
+          window.location.href = webUrl;
+        }
+      }, 1400);
+    }
+
+    function validateMessage() {
+      const text = messageInput.value.trim();
+
+      if (!agree.checked) {
+        showStatus(
+          "確認欄にチェックしてください。",
+          "error"
+        );
+        return null;
+      }
+
+      if (text.length < 5) {
+        showStatus(
+          "内容を5文字以上入力してください。",
+          "error"
+        );
+        messageInput.focus();
+        return null;
+      }
+
+      if (/(.)\1{19,}/u.test(text)) {
+        showStatus(
+          "同じ文字を20文字以上連続して入力できません。",
+          "error"
+        );
+        return null;
+      }
+
+      const lastSend = Number(
+        localStorage.getItem("tororoSimpleLastSend") || 0
+      );
+
+      const elapsed = Math.floor(
+        (Date.now() - lastSend) / 1000
+      );
+
+      if (lastSend && elapsed < WAIT_SECONDS) {
+        showStatus(
+          "連続操作防止のため、あと" +
+          (WAIT_SECONDS - elapsed) +
+          "秒お待ちください。",
+          "error"
+        );
+        return null;
+      }
+
+      return text;
+    }
+
+    function copyImmediately(text) {
+      let copied = false;
+
+      const temporaryArea = document.createElement("textarea");
+      temporaryArea.value = text;
+      temporaryArea.setAttribute("readonly", "");
+      temporaryArea.style.position = "fixed";
+      temporaryArea.style.left = "-9999px";
+      temporaryArea.style.opacity = "0";
+
+      document.body.appendChild(temporaryArea);
+      temporaryArea.focus();
+      temporaryArea.select();
+      temporaryArea.setSelectionRange(
+        0,
+        temporaryArea.value.length
+      );
+
+      try {
+        copied = document.execCommand("copy");
+      } catch (error) {
+        copied = false;
+      }
+
+      document.body.removeChild(temporaryArea);
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      }
+
+      if (!copied && !(navigator.clipboard && window.isSecureContext)) {
+        manualCopyText.value = text;
+        manualCopyBox.classList.add("show");
+      }
+
+      return copied;
+    }
+
+    async function copyToClipboard(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          return true;
+        } catch (error) {}
+      }
+
+      return copyImmediately(text);
+    }
+
+    function saveSendTime() {
+      localStorage.setItem(
+        "tororoSimpleLastSend",
+        String(Date.now())
+      );
+    }
+
+    function showStatus(text, type) {
+      statusBox.textContent = text;
+      statusBox.className = "status " + type;
+    }
+
+    function clearStatus() {
+      statusBox.textContent = "";
+      statusBox.className = "status";
+    }
+
+    updateLinks();
+  </script>
+</body>
+</html>
